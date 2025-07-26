@@ -10,10 +10,9 @@ import _pickle as pickle
 import time
 import random
 import math
-import ssl
 
-ssl_context=ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-ssl_context.load_cert_chain(certfile="server-cert.pem",keyfile="server-key.pem")
+# ssl_context=ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+# ssl_context.load_cert_chain(certfile="server-cert.pem",keyfile="server-key.pem")
 
 # setup sockets
 S = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
