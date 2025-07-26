@@ -164,12 +164,11 @@ def main(name):
 
 # get users name
 while True:
- 	name = input("Please enter your name: ")
-  
- 	if 0 < len(name) < 20:
- 		break
- 	else:
- 		print("Error, this name is not allowed (must be between 1 and 19 characters [inclusive])")
+    name = input("Please enter your name: ")
+    if 0 < len(name) < 20:
+        break
+    else:
+        print("Error, this name is not allowed (must be between 1 and 19 characters [inclusive])")
 
 # make window start in top left hand corner
 os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0,30)
