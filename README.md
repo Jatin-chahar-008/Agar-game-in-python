@@ -7,6 +7,11 @@ Before you will be able to run this game you must make one minor change the to t
 # Playing the Game
 To run the game you must have an instance of *server.py* running. You can then connect as many clients as you'd like by running *game.py*.
 
+## A glimpse of running the game
+**Output Window**
+
+<img src="/image/1.png" width="500">
+
 # Game Mechanics
 - Each game lasts 5 minutes
 - The larger you are the slower you move

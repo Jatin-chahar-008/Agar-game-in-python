@@ -1,6 +1,5 @@
 """
 main server script for running agar.io server
-
 can handle multiple/infinite connections on the same
 local network
 """
@@ -11,27 +10,17 @@ import time
 import random
 import math
 
-# ssl_context=ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-# ssl_context.load_cert_chain(certfile="server-cert.pem",keyfile="server-key.pem")
-
 # setup sockets
 S = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 S.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # Set constants
 PORT = 5555
-
-BALL_RADIUS = 5
 START_RADIUS = 7
-
 ROUND_TIME = 60 * 5
-
 MASS_LOSS_TIME = 7
-
 W, H = 1600, 830
-
-HOST_NAME = socket.gethostname()
-SERVER_IP = "10.30.202.12"
+SERVER_IP = "10.5.17.222"
 
 # try to connect to server
 try:
@@ -52,7 +41,6 @@ connections = 0
 _id = 0
 colors = [(255,0,0), (255, 128, 0), (255,255,0), (128,255,0),(0,255,0),(0,255,128),(0,255,255),(0, 128, 255), (0,0,255), (0,0,255), (128,0,255),(255,0,255), (255,0,128),(128,128,128), (0,0,0)]
 start = False
-stat_time = 0
 game_time = "Starting Soon"
 nxt = 1
 
@@ -62,7 +50,6 @@ nxt = 1
 def release_mass(players):
 	"""
 	releases the mass of players
-
 	:param players: dict
 	:return: None
 	"""
@@ -75,12 +62,10 @@ def release_mass(players):
 def check_collision(players, balls):
 	"""
 	checks if any of the player have collided with any of the balls
-
 	:param players: a dictonary of players
 	:param balls: a list of balls
 	:return: None
-	"""
-	to_delete = []			
+	"""	
 	for player in players:
 		p = players[player]
 		x = p["x"]
@@ -98,7 +83,6 @@ def check_collision(players, balls):
 def player_collision(players):
 	"""
 	checks for player collision and handles that collision
-
 	:param players: dict
 	:return: None
 	"""
@@ -122,7 +106,6 @@ def player_collision(players):
 def create_balls(balls, n):
 	"""
 	creates orbs/balls on the screen
-
 	:param balls: a list to add balls/orbs to
 	:param n: the amount of balls to make
 	:return: None
@@ -147,7 +130,6 @@ def get_start_location(players):
 	"""
 	picks a start location for a player based on other player
 	locations. It wiill ensure it does not spawn inside another player
-
 	:param players: dict
 	:return: tuple (x,y)
 	"""
@@ -169,7 +151,6 @@ def get_start_location(players):
 def threaded_client(conn, _id):
 	"""
 	runs in a new thread for each player connected to the server
-
 	:param con: ip address of connection
 	:param _id: int
 	:return: None
@@ -196,9 +177,8 @@ def threaded_client(conn, _id):
 	'''
 	commands start with:
 	move
-	jump
-	get
 	id - returns id of client
+	jump
 	'''
 	while True:
 
@@ -245,8 +225,6 @@ def threaded_client(conn, _id):
 			elif data.split(" ")[0] == "id":
 				send_data = str.encode(str(current_id))  # if user requests id then send it
 
-			elif data.split(" ")[0] == "jump":
-				send_data = pickle.dumps((balls,players, game_time))
 			else:
 				# any other command just send back list of players
 				send_data = pickle.dumps((balls,players, game_time))
@@ -292,6 +270,3 @@ while True:
 	connections += 1
 	start_new_thread(threaded_client,(host,_id))
 	_id += 1
-
-# when program ends
-print("[SERVER] Server offline")

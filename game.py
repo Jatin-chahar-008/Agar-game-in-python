@@ -2,19 +2,19 @@
 # moving around the screen
 
 import contextlib
+import os
 with contextlib.redirect_stdout(None):
     import pygame
 from client import Network
-import random
-import os
+
+pygame.init()
 pygame.font.init()
 
 # Constants
 PLAYER_RADIUS = 10
 START_VEL = 9
 BALL_RADIUS = 5
-
-W, H = 1600, 830
+W, H = 1300, 750
 
 NAME_FONT = pygame.font.SysFont("comicsans", 20)
 TIME_FONT = pygame.font.SysFont("comicsans", 30)
@@ -29,9 +29,7 @@ balls = []
 # FUNCTIONS
 def convert_time(t):
 	"""
-	converts a time given in seconds to a time in
-	minutes
-
+	converts a time given in seconds to a time in minutes
 	:param t: int
 	:return: string
 	"""
@@ -93,7 +91,6 @@ def main(name):
 	"""
 	function for running the game,
 	includes the main loop of the game
-
 	:param players: a list of dicts represting a player
 	:return: None
 	"""
@@ -163,19 +160,20 @@ def main(name):
 
 
 # get users name
-while True:
-    name = input("Please enter your name: ")
-    if 0 < len(name) < 20:
-        break
-    else:
-        print("Error, this name is not allowed (must be between 1 and 19 characters [inclusive])")
+if __name__ == "__main__":
+	while True:
+		name = input("Please enter your name: ")
+		if 0 < len(name) < 20:
+			break
+		else:
+			print("Error, this name is not allowed (must be between 1 and 19 characters [inclusive])")
 
-# make window start in top left hand corner
-os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0,30)
+	# make window start in top left hand corner
+	os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0,30)
 
-# setup pygame window
-WIN = pygame.display.set_mode((W,H))
-pygame.display.set_caption("Blobs")
+	# setup pygame window
+	WIN = pygame.display.set_mode((W,H))
+	pygame.display.set_caption("Agar game")
 
-# start game
-main(name)
+	# start game
+	main(name)
