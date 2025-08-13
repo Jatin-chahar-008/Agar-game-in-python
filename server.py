@@ -160,12 +160,12 @@ def threaded_client(conn, _id):
 	current_id = _id
 
 	# recieve a name from the client
-	data = conn.recv(16)
+	data = conn.recv(32)
 	name = data.decode("utf-8")
 	print("[LOG]", name, "connected to the server.")
 
 	# Setup properties for each new player
-	color = colors[current_id]
+	color = colors[current_id % len(colors)]
 	x, y = get_start_location(players)
 	players[current_id] = {"x":x, "y":y,"color":color,"score":0,"name":name}  # x, y color, score, name
 
@@ -177,8 +177,7 @@ def threaded_client(conn, _id):
 	'''
 	commands start with:
 	move
-	id - returns id of client
-	jump
+	get
 	'''
 	while True:
 
@@ -221,9 +220,6 @@ def threaded_client(conn, _id):
 					print("[GAME] Generating more orbs")
 
 				send_data = pickle.dumps((balls,players, game_time))
-
-			elif data.split(" ")[0] == "id":
-				send_data = str.encode(str(current_id))  # if user requests id then send it
 
 			else:
 				# any other command just send back list of players
